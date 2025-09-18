@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Attendance</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <h2>Face Recognition Attendance System</h2>
+
+    <!-- Video Feed -->
+    <div class="video-container">
+        <video id="video" autoplay></video>
+        <button onclick="recognizeFace()">Recognize Face</button>
+    </div>
+
+    <h3>Recognized Students:</h3>
+    <ul id="studentsList"></ul>
+
+    <script>
+        // Access the camera and stream it to the video element
+        function startCamera() {
+            let video = document.getElementById("video");
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(error => {
+                    console.error("Error accessing the camera:", error);
+                });
+        }
+
+        // Capture a frame and send it for face recognition
+        function recognizeFace() {
+            let video = document.getElementById("video");
+            let studentsList = document.getElementById("studentsList");
+
+            studentsList.innerHTML = "<p class='loading'>Recognizing...</p>";
+
+            let canvas = document.createElement("canvas");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            let context = canvas.getContext("2d");
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(blob => {
+                let formData = new FormData();
+                formData.append("image", blob);
+
+                fetch('/recognize', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    studentsList.innerHTML = ""; // Clear loading text
+                    data.recognized_students.forEach(student => {
+                        let li = document.createElement("li");
+                        li.textContent = `${student.name} (Total Attendance: ${student.total_attendance})`;
+                        studentsList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error recognizing face:", error);
+                    studentsList.innerHTML = "<p class='loading' style='color: red;'>Error recognizing face</p>";
+                });
+            }, "image/png");
+        }
+
+        // Start the camera when the page loads
+        window.onload = startCamera;
+    </script>
+</body>
+</html>

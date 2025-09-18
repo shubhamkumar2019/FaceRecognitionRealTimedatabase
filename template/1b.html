@@ -1,0 +1,116 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Middle Background with About</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-image: url('../static/middle.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    /* Header Style (copied from your code) */
+.header {
+  display: flex;
+  align-items: center;
+  background: black;
+  padding: 0 20px;
+  height: 60px;
+  box-shadow: 0px 2px 10px rgba(0, 150, 255, 0.5);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* controls spacing between Schoolopedia and Home button */
+}
+
+.logo-text {
+  margin: 0;
+  color: white;
+}
+
+
+
+    .home-button {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 8px 15px;
+      border: 1px solid #00ccff;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+ .home-button:hover {
+      background: #00ccff;
+      color: black;
+    }
+
+    .text-overlay {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px 40px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .about-heading {
+      font-size: 30px;
+      color: #00ccff;
+      margin-bottom: 20px;
+    }
+
+    .text-overlay p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #f0f0f0;
+    }
+
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo-container">
+    <h2 class="logo-text">Schoolopedia</h2>
+    <a href="{{url_for('home')}}" class="home-button">Home</a>
+  </div>
+</header>
+
+
+  <!-- About Section -->
+  <div class="text-overlay">
+    <h2 class="about-heading">ABOUT</h2>
+    <p>
+      Our group project is a Face Recognition Attendance System that automates student attendance using facial recognition technology. Built with Python, Flask, and integrated with Firebase Realtime Database, the system captures live video through the user's webcam, detects and recognizes faces using OpenCV and the face_recognition library, and updates attendance records accordingly. The web interface includes a landing page and a recognition page, providing a user-friendly way to monitor attendance in real time. The system ensures accuracy by preventing duplicate entries within a short interval and offers a modern solution to traditional attendance methods.
+
+
+
+
+
+
+
+
+
+    </p>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+body{
+    flex-direction: column;
+    align-items: center;
+
+    padding: 20px;
+    overflow-x: hidden;
+    height: 100%;
+    background: #FFF5E0;
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.navbar{
+    border: 0 !important;
+    margin: 0;
+    background-color: #f9fbfd ;
+    min-height: 50px;
+    padding: 0;
+    border-bottom: 2px solid #8a8a8a;
+}
+
+.container {
+    display: flex;
+    font-family: 'Poppins', sans-serif !important;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    width: 80%;
+}
+
+/* Left Side: Camera */
+.video-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+video {
+    width: 90%;
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+.btn:hover{
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+    background: #b700ff;
+    color:white;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Right Side: Student Info */
+.students-list {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    height: 300px;
+    overflow-y: auto;
+}
+h2{
+    font-size: 7vh;
+    padding-top: 100px;
+}
+.recognizedCon{
+    background: white;
+}

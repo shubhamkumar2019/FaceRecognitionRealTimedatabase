@@ -1,0 +1,154 @@
+body {
+  flex-direction: column;
+  align-items: center;
+  background-image: url('../static/mainback.jpg') !important;
+  overflow-x: hidden;
+  background: #4D79BA;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Unified Header Style */
+header {
+  display: flex;
+  align-items: center;
+  background: black;
+  padding: 0 20px;
+  height: 60px;
+  box-shadow: 0px 2px 10px rgba(0, 150, 255, 0.5);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* controls spacing between Schoolopedia and Home button */
+}
+
+.logo-text {
+  margin: 0;
+  color: white;
+}
+
+.home-button {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 8px 15px;
+  border: 1px solid #00ccff;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.home-button:hover {
+  background: #00ccff;
+  color: black;
+}
+
+/* Additional styles */
+.text-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.about-heading {
+  font-size: 30px;
+  color: #00ccff;
+  margin-bottom: 20px;
+}
+
+.text-overlay p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #f0f0f0;
+}
+
+.heading {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  width: 80%;
+}
+
+/* Left Side: Camera */
+.video-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+video {
+  width: 90%;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+  background: #b700ff;
+  color: white;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Right Side: Student Info */
+.students-list {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  height: 300px;
+  overflow-y: auto;
+}
+
+#main {
+  font-size: 7vh;
+  padding-top: 100px;
+}
+
+.recognizedCon {
+  background: white;
+}
+
+h3 {
+  color: white;
+}
+p{
+  color: white;
+}

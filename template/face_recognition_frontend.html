@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Real-Time Face Recognition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    #video {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .instructions {
+      color: #d9534f;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>📡 Real-Time Face Recognition Attendance</h2>
+  </header>
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6">
+        <video id="video" autoplay muted></video>
+        <div class="instructions text-center">
+          👁 Please blink normally — face will be recognized automatically
+        </div>
+        <div id="status" class="text-center text-secondary mt-2">Waiting for face...</div>
+      </div>
+
+      <div class="col-md-6">
+        <h5 class="text-center">Recognized Students</h5>
+        <div id="studentsList" class="row g-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const video = document.getElementById("video");
+    const studentsList = document.getElementById("studentsList");
+    const statusText = document.getElementById("status");
+    let recognitionRunning = true;
+
+    function startCamera() {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          video.srcObject = stream;
+        })
+        .catch((error) => {
+          console.error("Camera access error:", error);
+          alert("Could not access the camera.");
+        });
+    }
+
+    async function captureAndSend() {
+      if (!recognitionRunning) return;
+
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      canvas.toBlob((blob) => {
+        const formData = new FormData();
+        formData.append("image", blob);
+
+        fetch("/recognize", {
+          method: "POST",
+          body: formData
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) {
+            statusText.innerText = "Liveness check failed — blink not detected";
+            return;
+          }
+
+          if (data.recognized_students && data.recognized_students.length > 0) {
+            recognitionRunning = false;
+            statusText.innerText = "Recognition successful 🎉";
+
+            studentsList.innerHTML = "";
+            data.recognized_students.forEach((student) => {
+              const div = document.createElement("div");
+              div.className = "col-md-6";
+              div.innerHTML = `
+                <div class="card p-2 shadow-sm">
+                  <h6 class="text-center">${student.name}</h6>
+                  <ul class="list-group list-group-flush small">
+                    <li class="list-group-item">ID: ${student.id}</li>
+                    <li class="list-group-item">Major: ${student.major}</li>
+                    <li class="list-group-item">Section: ${student.section}</li>
+                    <li class="list-group-item">Start Year: ${student.starting_year}</li>
+                    <li class="list-group-item">Attendance: ${student.total_attendance}</li>
+                    <li class="list-group-item">Last Time: ${student.last_attendance_time}</li>
+                  </ul>
+                </div>`;
+              studentsList.appendChild(div);
+            });
+          } else {
+            statusText.innerText = "No known face detected";
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          statusText.innerText = "Error during recognition";
+        });
+      }, "image/jpeg");
+    }
+
+    function startRealTimeRecognition() {
+      setInterval(() => {
+        if (video.readyState === 4) {
+          captureAndSend();
+        }
+      }, 1500); // capture every 1.5 seconds
+    }
+
+    window.onload = () => {
+      startCamera();
+      startRealTimeRecognition();
+    };
+  </script>
+</body>
+</html>
